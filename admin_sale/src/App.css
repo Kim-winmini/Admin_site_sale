@@ -6,7 +6,7 @@ body {
 }
 
 header {
-  background-color: #474747;
+  background-color: #5c5c5c;
   color: white;
   text-align: center;
   padding: 1rem;
@@ -46,11 +46,26 @@ p {
   margin: 5px 0;
 }
 
-.inventory-item {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.inventory-item:last-child {
-  border-bottom: none;
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:hover {
+  background-color: #45a049;
+}
+
+.pagination button:focus {
+  outline: none;
 }
