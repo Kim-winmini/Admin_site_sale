@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Customer() {
   const [customers, setCustomers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userId, setUserId] = useState('');
   const itemsPerPage = 3;
 
-  // Flask API에서 고객 정보를 가져오는 함수
-  const fetchCustomers = async () => {
+  // Flask API에서 모든 고객 정보를 가져오는 함수
+  const fetchAllCustomers = async (user_id = '') => {
     try {
-      const response = await fetch('/get_customers');
-      const data = await response.json();
-      setCustomers(data);
+      const response = await axios.get(`http://54.166.35.86:8080/api/customers`, {
+        params: { user_id }
+      });
+      setCustomers(response.data); // 고객 정보 상태 변수에 저장
     } catch (error) {
-      console.error('Error fetching customers:', error);
+      console.error('Error fetching customers:', error); // 오류 발생 시 콘솔에서 확인
     }
   };
 
-  // 컴포넌트가 마운트될 때 고객 정보를 가져옴
+  // 컴포넌트가 마운트될 때 모든 고객 정보를 가져옴
   useEffect(() => {
-    fetchCustomers();
+    fetchAllCustomers();
   }, []);
 
   // 현재 페이지에 해당하는 항목을 계산
@@ -35,16 +38,28 @@ function Customer() {
     pageNumbers.push(i);
   }
 
+  // 특정 user_id를 검색하는 함수
+  const handleSearch = () => {
+    fetchAllCustomers(userId);
+  };
+
   return (
     <div>
       <h1>고객 목록</h1>
+      <input
+        type="text"
+        placeholder="User ID"
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)} // 입력된 user_id를 상태에 저장
+      />
+      <button onClick={handleSearch}>조회</button> 
       <ul>
         {currentCustomers.map((customer) => (
           <li key={customer.user_id}>
             <h2>{customer.user_name}</h2>
-            <p>이메일: {customer.user_email}</p>
-            <p>전화번호: {customer.user_phone}</p>
-            <p>등급: {customer.user_grade}</p>
+            <p>Email: {customer.user_email}</p>
+            <p>Phone: {customer.user_phone}</p>
+            <p>Grade: {customer.user_grade}</p>
           </li>
         ))}
       </ul>

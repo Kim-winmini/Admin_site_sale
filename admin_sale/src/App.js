@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Inventory from './pages/Inventory';
-import Customer from './pages/Customer'; 
+import Customer from './pages/Customer';
 import './App.css';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <nav>
           <Link to="/">홈</Link>
           <Link to="/inventory">재고 확인</Link>
-          <Link to="/customers">고객 정보</Link> 
+          <Link to="/customers">고객 정보</Link>
         </nav>
       </header>
       <div className="container">
