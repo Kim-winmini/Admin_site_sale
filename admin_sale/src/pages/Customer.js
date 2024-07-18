@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '.env';
 
 function Customer() {
   const [customers, setCustomers] = useState([]);
@@ -10,9 +11,10 @@ function Customer() {
   // Flask API에서 모든 고객 정보를 가져오는 함수
   const fetchAllCustomers = async (user_name = '') => {
     try {
-      const response = await axios.get(`http://54.166.35.86:8080/api/customers`, {
+      const response = await axios.get(`${API_BASE_URL}/api/customers`, {
         params: { user_name }
       });
+      console.log('Fetched customers:', response.data); // 디버깅 출력
       setCustomers(response.data); // 고객 정보 상태 변수에 저장
     } catch (error) {
       console.error('Error fetching customers:', error); // 오류 발생 시 콘솔에서 확인
@@ -21,7 +23,7 @@ function Customer() {
 
   // 컴포넌트가 마운트될 때 모든 고객 정보를 가져옴
   useEffect(() => {
-    fetchAllCustomers();
+    fetchAllCustomers(); 
   }, []);
 
   // 현재 페이지에 해당하는 항목을 계산
