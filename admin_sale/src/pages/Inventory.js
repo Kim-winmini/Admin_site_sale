@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import InventoryList from '../components/InventoryList';
 import axios from 'axios';
+import API_BASE_URL from '.env';
 
 function Inventory() {
   const [inventory, setInventory] = useState([]);
@@ -11,7 +12,7 @@ function Inventory() {
   // Flask API에서 모든 재고 정보를 가져오는 함수
   const fetchAllInventory = async (product_id = '') => {
     try {
-      const response = await axios.get(`http://54.166.35.86:8080/api/products`, {
+      const response = await axios.get(`${API_BASE_URL}/api/products`, {
         params: { product_id }
       });
       setInventory(response.data); // 재고 정보 상태 변수에 저장
