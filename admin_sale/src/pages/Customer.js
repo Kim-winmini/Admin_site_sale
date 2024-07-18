@@ -4,14 +4,14 @@ import axios from 'axios';
 function Customer() {
   const [customers, setCustomers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
   const itemsPerPage = 3;
 
   // Flask API에서 모든 고객 정보를 가져오는 함수
-  const fetchAllCustomers = async (user_id = '') => {
+  const fetchAllCustomers = async (user_name = '') => {
     try {
       const response = await axios.get(`http://54.166.35.86:8080/api/customers`, {
-        params: { user_id }
+        params: { user_name }
       });
       setCustomers(response.data); // 고객 정보 상태 변수에 저장
     } catch (error) {
@@ -38,9 +38,9 @@ function Customer() {
     pageNumbers.push(i);
   }
 
-  // 특정 user_id를 검색하는 함수
+  // 특정 user_name을 검색하는 함수
   const handleSearch = () => {
-    fetchAllCustomers(userId);
+    fetchAllCustomers(userName);
   };
 
   return (
@@ -48,9 +48,9 @@ function Customer() {
       <h1>고객 목록</h1>
       <input
         type="text"
-        placeholder="User ID"
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)} // 입력된 user_id를 상태에 저장
+        placeholder="User Name"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)} // 입력된 user_name을 상태에 저장
       />
       <button onClick={handleSearch}>조회</button> 
       <ul>
